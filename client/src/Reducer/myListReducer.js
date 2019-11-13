@@ -2,12 +2,10 @@ export default (state={}, action) => {
     switch(action.type){
         case "FETCH_MYLIST":
             return action.payload;
-        case "ADD_ITEM":
+        case "MOVE_TO_MYLIST":
             return [...state, action.payload];
-        case "REMOVE_ITEM":
-        case "REMOVE_ITEM_MYLIST":
+        case "MOVE_TO_RECOMMEND":
             return state.filter(item=> item.id !== action.payload.id);
-
         default:
             return state;
     }

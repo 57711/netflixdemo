@@ -1,11 +1,13 @@
 import React from 'react';
-// import logo from './download.png';
+import logo from '../Netflix_2015_logo.svg';
 
 const Header = () => {
     return (
-        <div className="ui secondary pointing menu">
-            <div className="ui container">                
-                <img src="../../public/download.jpg" className="item" alt="NETFLIX" />  
+        <div className="ui massive text inverted menu">
+            <div className="ui container">  
+                <div className="item" style={{padding:0, width:120+'px'}}>              
+                    <img style={{width: 100+'%'}} src={logo} alt="NETFLIX" />  
+                </div>
             </div>
         </div>              
 
