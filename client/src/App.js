@@ -1,18 +1,40 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
-import MyList from './components/MyList';
-import Recommand from './components/Recommandation';
 import Header from './components/Header';
+import ShowList from './components/ShowList';
 
-function App() {
-  return (
-    <div className="ui container">
-      <Header />
-      <MyList />
-      <Recommand />
-    </div>
-  );
+import { connect } from 'react-redux';
+import { fetchData, removeMyList, addMyList } from './action';
+
+class App extends React.Component {  
+  componentDidMount(){
+    this.props.fetchData('mylist');
+    this.props.fetchData('recommendations');
+  }
+  
+  render(){
+    return (
+      <div className="ui container">
+        <Header />
+        <ShowList 
+        title="My List" 
+        data={this.props.mylist}
+        clickHandler={this.props.removeMyList}
+        buttonText="Remove"
+        />
+        <ShowList 
+        title="Recommendations" 
+        data={this.props.recommend}
+        clickHandler={this.props.addMyList}
+        buttonText="Add" />
+      </div>
+    );
+  }
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    mylist: state.mylist,
+    recommend: state.recommend
+  }
+}
+export default connect(mapStateToProps,{fetchData, removeMyList, addMyList})(App);
