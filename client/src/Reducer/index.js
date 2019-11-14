@@ -4,5 +4,5 @@ import recommendRecuder from './recommendReducer';
 
 export default combineReducers({
     mylist: myListReducer,
-    recommend: recommendRecuder
+    recommendations: recommendRecuder
 })

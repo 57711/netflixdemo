@@ -1,8 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from "react-redux";
+import { fetchData, addMyList, removeMyList } from '../action';
+
 const ShowList = props => {
-    const [onHover, changeHover] = useState(null);  
+    const [onHover, changeHover] = useState(null);
+    const title = props.title.replace(" ","").toLowerCase();
+    const clickHandler = (item) => {
+        switch (title){
+            case "mylist":
+                return props.removeMyList(item);
+            case "recommendations":
+                return props.addMyList(item);
+            default:
+                return null;
+        }
+    }
+    useEffect(()=>{
+        props.fetchData(title);
+    },[]);
 
     const renderList = () => {
         if(Array.isArray(props.data) === true){
@@ -19,7 +36,7 @@ const ShowList = props => {
                             {onHover===item.id&&
                             <button 
                             className="tiny ui inverted primary fluid button " 
-                            onClick={()=>props.clickHandler(item)}>
+                            onClick={()=>clickHandler(item)}>
                                 {props.buttonText}
                             </button>}
                         </div>
@@ -43,12 +60,11 @@ const ShowList = props => {
 }
 
 ShowList.propTypes = {
-    data: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.array
-    ]).isRequired,
     title: PropTypes.string.isRequired,
-    clickHandler: PropTypes.func.isRequired,
     buttonText: PropTypes.string.isRequired
 }
-export default ShowList;
+const mapStateToProps = (state, ownProps) => {
+    const title = ownProps.title.replace(" ","").toLowerCase();
+    return {data:state[title]}
+}
+export default connect(mapStateToProps, {fetchData,addMyList,removeMyList})(ShowList);
