@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import myListReducer from './myListReducer';
-import recommendRecuder from './recommendReducer';
+import showListReducer from '../components/ShowList/reducers';
 
 export default combineReducers({
-    mylist: myListReducer,
-    recommendations: recommendRecuder
+  showListReducer,
 })
